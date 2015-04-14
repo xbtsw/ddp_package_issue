@@ -2,15 +2,17 @@ Images = new FS.Collection("images", {stores: [new FS.Store.GridFS('original')]}
 Test = new Meteor.Collection("test");
 
 Meteor.startup(function () {
-    var appleImage;
-    if (Images.find().count() === 0) {
-        appleImage = Images.insert('http://sprayitaway.com/wp-content/uploads/2013/08/apple_by_grv422-d5554a4.jpg');
-    }
+    if (Meteor.isServer) {
+        var appleImage;
+        if (Images.find().count() === 0) {
+            appleImage = Images.insert('http://sprayitaway.com/wp-content/uploads/2013/08/apple_by_grv422-d5554a4.jpg');
+        }
 
-    if (Test.find().count() === 0) {
-        Test.insert({
-            test: appleImage
-        });
+        if (Test.find().count() === 0) {
+            Test.insert({
+                test: appleImage
+            });
+        }
     }
 });
 
